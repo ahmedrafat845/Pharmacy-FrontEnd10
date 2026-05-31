@@ -14,7 +14,7 @@ const CartPage = () => {
     const { cart, UpdateProductCart, deleteProductCart, clearCart } = useContext(FetchCartContext);
     const { userData } = useContext(mediaContext);
 
-    const cartItems = cart?.items || [];
+    // const cartItems = cart?.items || [];
 
     const [totals, setTotals] = useState({
         subtotal: 0,

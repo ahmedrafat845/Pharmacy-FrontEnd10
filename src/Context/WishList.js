@@ -37,7 +37,7 @@ export default function FetchWishlistProvider(props) {
     if (localStorage.getItem("token") && userData !== "") {
       getProductWishlist();
     }
-  }, [userData]);
+  }, [userData,getProductWishlist]);
 
   const addProductToWishlist = async (productId) => {
     try {

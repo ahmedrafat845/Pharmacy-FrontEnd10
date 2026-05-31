@@ -58,7 +58,7 @@ export default function FetchCartProvider(props) {
         if (localStorage.getItem("token") && userData !== '') {
             getProductCart()
         }
-    }, [userData])
+    }, [userData,getProductCart])
 
     const deleteProductCart = async (productId) => {
         try {

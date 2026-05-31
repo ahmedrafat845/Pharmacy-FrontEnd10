@@ -104,7 +104,7 @@ const Form = () => {
                 password: ''
             });
         }
-    }, [userData]);
+    }, [userData,formik]);
 
     return (
         <>
