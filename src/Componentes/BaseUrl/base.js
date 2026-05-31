@@ -1,0 +1,1 @@
+export const BaseUrl="https://pharmacy-back-end10.vercel.app"
