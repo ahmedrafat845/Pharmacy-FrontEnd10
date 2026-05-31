@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import styles from './Adver.module.scss';
 import { Container } from 'react-bootstrap/esm';
 import health from '../../../../images/medicaltourism.jpg'

@@ -4,7 +4,6 @@ import { mediaContext } from './../../../Context/MediaStore';
 import styles from './CartPage.module.scss'; 
 import { Container } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import Footer from '../../Ui/Footer/Footer';
 import axios from 'axios';
 import emptyCartImage from '../../../images/Cartempty.png';
 import { useNavigate } from 'react-router-dom';
@@ -25,21 +24,30 @@ const CartPage = () => {
 
     const [paymentMethod, setPaymentMethod] = useState('cash');
 
-    useEffect(() => {
-        const subtotal = cartItems.reduce((acc, item) => {
-            const price = item.productId.offer? parseFloat(item.productId.price)*0.8 : parseFloat(item.productId.price);
-            const count = item.quantity;
+  useEffect(() => {
+    const items = cart?.items || [];
 
-            if (!isNaN(price) && !isNaN(count)) {
-                return acc + (price * count);
-            }
-            return acc;
-        }, 0);
-        
-        const totalPrice = subtotal + totals.shippingFees;
+    const subtotal = items.reduce((acc, item) => {
+        const price = item.productId.offer
+            ? parseFloat(item.productId.price) * 0.8
+            : parseFloat(item.productId.price);
 
-        setTotals({ subtotal, shippingFees: totals.shippingFees, totalPrice });
-    }, [cartItems, totals.shippingFees]);
+        const count = item.quantity;
+
+        if (!isNaN(price) && !isNaN(count)) {
+            return acc + price * count;
+        }
+        return acc;
+    }, 0);
+
+    const totalPrice = subtotal + totals.shippingFees;
+
+    setTotals(prev => ({
+        ...prev,
+        subtotal,
+        totalPrice
+    }));
+}, [cart?.items, totals.shippingFees]);
 
     const handlePayment = () => {
         if (paymentMethod === 'cash') {
@@ -94,7 +102,7 @@ const CartPage = () => {
                 throw new Error('Payment token is missing from the response.');
             }
     
-            const orderId = response.data.orderId; 
+            // const orderId = response.data.orderId; 
             const paymentUrl = `https://accept.paymobsolutions.com/api/acceptance/iframes/${871391}?payment_token=${response.data.paymentToken}`;
             
             window.open(paymentUrl, '_blank');
@@ -132,16 +140,16 @@ const CartPage = () => {
 
         UpdateProductCart(productId, newCount);
     };
-    const handleCheckout = () => {
-        // if (cartItems.length === 0) {
-        //     toast.error('Your cart is empty. Please add items to your cart before proceeding.');
-        //     return;
-        // }
+    // const handleCheckout = () => {
+    //     // if (cartItems.length === 0) {
+    //     //     toast.error('Your cart is empty. Please add items to your cart before proceeding.');
+    //     //     return;
+    //     // }
 
 
 
-        // clearCart();
-    };
+    //     // clearCart();
+    // };
 
     return (
         <div>

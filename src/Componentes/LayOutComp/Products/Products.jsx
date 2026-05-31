@@ -21,7 +21,7 @@ export default function Products() {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     }
-  }, [hash,FetchProduct]);
+  }, [hash]);
   
 
 

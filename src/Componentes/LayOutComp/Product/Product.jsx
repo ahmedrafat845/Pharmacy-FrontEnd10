@@ -58,7 +58,7 @@ export default function Product({ categoryProducts =[], categoryName = '', loadi
         <h2 className={Styles.title}>{categoryName} Products💊</h2>
       </div>
       <div className="row mt-3">
-        { categoryProducts.length==0 &&<div className='text-center'>
+        { categoryProducts.length===0 &&<div className='text-center'>
             <img src={noProduct} alt="No Product" className={Styles.noProduct} />
           </div>}
         {loading ? (

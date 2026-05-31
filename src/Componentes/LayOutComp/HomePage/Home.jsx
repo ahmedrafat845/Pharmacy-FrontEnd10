@@ -6,7 +6,7 @@ import MedicalTourism from './MedicalTourism/MedicalTourism';
 import Ask from './Ask/Ask';
 import BestSeller from './bestSeller/BestSeller';
 import Test from './Test/Test';
-import Footer from '../../Ui/Footer/Footer';
+
 
 
 

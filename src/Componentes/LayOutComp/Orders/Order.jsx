@@ -12,10 +12,10 @@ const Orders = () => {
     const { userData, Role } = useContext(mediaContext);
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
+    const [, setError] = useState('');
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [paymentError, setPaymentError] = useState('');
-    const [paymentStatus, setPaymentStatus] = useState(null);
+    const [, setPaymentStatus] = useState(null);
     const [statusToUpdate, setStatusToUpdate] = useState('');
     const navigate = useNavigate();
 

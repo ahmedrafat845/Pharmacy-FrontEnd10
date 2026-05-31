@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import Styles from './BestSeller.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faArrowRight, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FetchCartContext } from './../../../../Context/Cart';
 import { FetchWishlistContext } from '../../../../Context/WishList';
 import { BaseUrl } from '../../../BaseUrl/base'
@@ -75,7 +75,7 @@ function BestSeller() {
     const fetchBestSellerCounts = async () => {
         try {
             const response = await axios.get(`${BaseUrl}/products/getAllProducts`);
-            const allProducts = response  .data.allProducts || [];
+            const allProducts = response.data.allProducts || [];
             const bestSellerItems = allProducts.filter(item => item.bestSeller === true);
             setBestSellerCounts(bestSellerItems);
         } catch (err) {

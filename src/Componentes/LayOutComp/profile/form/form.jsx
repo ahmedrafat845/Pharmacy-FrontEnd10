@@ -83,8 +83,9 @@ const Form = () => {
                 notify(error.message, 'error');
             }
         }
-    });
-
+    }); 
+    
+// eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (userData) {
             formik.setValues({

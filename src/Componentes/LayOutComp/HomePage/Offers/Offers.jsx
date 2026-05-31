@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import Styles from './Offers.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import {faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { FetchCartContext } from './../../../../Context/Cart';
 import { FetchWishlistContext } from '../../../../Context/WishList';
 import { BaseUrl } from '../../../BaseUrl/base'

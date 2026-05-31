@@ -12,22 +12,22 @@ export default function Footer() {
         </div>
 
         <div>
-          <a href='' className='me-4 text-reset text-light' style={{ textDecoration: 'none' }}>
+          <a href='/' className='me-4 text-reset text-light' style={{ textDecoration: 'none' }}>
             <MDBIcon fab icon="facebook-f" />
           </a>
-          <a href='' className='me-4 text-reset text-light' style={{ textDecoration: 'none' }}>
+          <a href='/' className='me-4 text-reset text-light' style={{ textDecoration: 'none' }}>
             <MDBIcon fab icon="twitter" />
           </a>
-          <a href='' className='me-4 text-reset text-light' style={{ textDecoration: 'none' }}>
+          <a href='/' className='me-4 text-reset text-light' style={{ textDecoration: 'none' }}>
             <MDBIcon fab icon="google" />
           </a>
-          <a href='' className='me-4 text-reset text-light' style={{ textDecoration: 'none' }}>
+          <a href='/' className='me-4 text-reset text-light' style={{ textDecoration: 'none' }}>
             <MDBIcon fab icon="instagram" />
           </a>
-          <a href='' className='me-4 text-reset text-light' style={{ textDecoration: 'none' }}>
+          <a href='/' className='me-4 text-reset text-light' style={{ textDecoration: 'none' }}>
             <MDBIcon fab icon="linkedin" />
           </a>
-          <a href='' className='me-4 text-reset text-light' style={{ textDecoration: 'none' }}>
+          <a href='/' className='me-4 text-reset text-light' style={{ textDecoration: 'none' }}>
             <MDBIcon fab icon="github" />
           </a>
         </div>

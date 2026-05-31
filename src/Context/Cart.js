@@ -52,7 +52,8 @@ export default function FetchCartProvider(props) {
         const totalCount = items.reduce((acc, item) => acc + (item.quantity || 0), 0);
         setNumOfCart(totalCount);
     };
-
+    
+// eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (localStorage.getItem("token") && userData !== '') {
             getProductCart()
