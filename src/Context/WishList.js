@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { BaseUrl } from "../Componentes/BaseUrl/base";
 import { mediaContext } from "./MediaStore";
@@ -7,96 +7,95 @@ import { mediaContext } from "./MediaStore";
 export const FetchWishlistContext = createContext();
 
 export default function FetchWishlistProvider(props) {
-  const notify = (msg, type) => {
-    toast[type](msg, {
-      autoClose: 1000,
-      theme: "dark",
-      position: "bottom-center",
-    });
-  };
+    const notify = (msg, type) => {
+        toast[type](msg, {
+            autoClose: 1000,
+            theme: 'dark',
+            position: 'bottom-center'
+        });
+    }
 
-  const [wishlist, setWishlist] = useState({ result: [] });
-  const [numOfWishlistItems, setNumOfWishlistItems] = useState(0);
-  const { userData } = useContext(mediaContext);
-  const token = localStorage.getItem("token");
+    const [wishlist, setWishlist] = useState({ result: [] });
+    const [numOfWishlistItems, setNumOfWishlistItems] = useState(0);
+    const { userData } = useContext(mediaContext);
+    const token = localStorage.getItem('token');
 
-  const getProductWishlist = async () => {
+
+  const getProductWishlist = useCallback(async () => {
     try {
-      const { data } = await axios.get(`${BaseUrl}/wishlist/getAllWishlist`, {
-        headers: { token: token },
-      });
-      setWishlist(data || []);
-      setNumOfWishlistItems(data.result.length || 0);
+        const { data } = await axios.get(`${BaseUrl}/wishlist/getAllWishlist`, {
+            headers: { token }
+        });
+
+        setWishlist(data || []);
+        setNumOfWishlistItems(data.result.length || 0);
     } catch (error) {
-      console.error("Error fetching wishlist:", error);
+        console.error("Error fetching wishlist:", error);
     }
-  };
+}, [token]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    if (localStorage.getItem("token") && userData !== "") {
-      getProductWishlist();
-    }
-  }, [userData,getProductWishlist]);
 
-  const addProductToWishlist = async (productId) => {
-    try {
-      console.log(`Adding product to wishlist: ${productId}`);
-      const response = await axios.patch(
-        `${BaseUrl}/wishlist/addToWishlist`,
-        { productId },
-        {
-          headers: { token: token },
-        },
-      );
-      console.log("Response from adding to wishlist:", response.data);
-      notify("Product Added To Wishlist", "success");
-      getProductWishlist();
-    } catch (error) {
-      console.error("Error adding product to wishlist:", error);
-      notify("Error adding product to wishlist", "error");
-    }
-  };
+    useEffect(() => {
+        if (localStorage.getItem("token") && userData !== '') {
+            getProductWishlist();
+        }
+    }, [userData,getProductWishlist]);
 
-  const deleteProductFromWishlist = async (productId) => {
-    try {
-      await axios.delete(`${BaseUrl}/wishlist/removeFromWishlist`, {
-        data: { productId },
-        headers: { token: token },
-      });
-      notify("Product Deleted From Wishlist", "success");
-      getProductWishlist();
-    } catch (error) {
-      console.error("Error deleting product from wishlist:", error);
-      notify("Error deleting product from wishlist", "error");
-    }
-  };
+    
+    const addProductToWishlist = async (productId) => {
 
-  const clearWishlist = async () => {
-    try {
-      await axios.delete(`${BaseUrl}/wishlist/clearWishlist`, {
-        headers: { token: token },
-      });
-      setWishlist([]);
-      notify("Wishlist cleared", "success");
-    } catch (error) {
-      console.error("Error clearing wishlist:", error);
-      notify("Error clearing wishlist", "error");
-    }
-  };
+        
+        try {
+            console.log(`Adding product to wishlist: ${productId}`);
+            const response = await axios.patch(`${BaseUrl}/wishlist/addToWishlist`, { productId }, {
+                headers: { 'token': token }
+            });
+            console.log('Response from adding to wishlist:', response.data);
+            notify('Product Added To Wishlist', 'success');
+            getProductWishlist();
+        } catch (error) {
+            console.error("Error adding product to wishlist:", error);
+            notify('Error adding product to wishlist', 'error');
+        }
+    };
 
-  return (
-    <FetchWishlistContext.Provider
-      value={{
-        addProductToWishlist,
-        wishlist,
-        numOfWishlistItems,
-        deleteProductFromWishlist,
-        clearWishlist,
-        getProductWishlist,
-      }}
-    >
-      {props.children}
-    </FetchWishlistContext.Provider>
-  );
+    const deleteProductFromWishlist = async (productId) => {
+        try {
+            await axios.delete(`${BaseUrl}/wishlist/removeFromWishlist`, {
+                data: { productId },
+                headers: { 'token': token }
+            });
+            notify('Product Deleted From Wishlist', 'success');
+            getProductWishlist(); 
+        } catch (error) {
+            console.error("Error deleting product from wishlist:", error);
+            notify('Error deleting product from wishlist', 'error');
+        }
+    };
+
+    const clearWishlist = async () => {
+        try {
+            await axios.delete(`${BaseUrl}/wishlist/clearWishlist`, {
+                headers: { 'token': token }
+            });
+            setWishlist([]);
+            notify('Wishlist cleared', 'success');
+        } catch (error) {
+            console.error("Error clearing wishlist:", error);
+            notify('Error clearing wishlist', 'error');
+        }
+    };
+
+    return (
+        <FetchWishlistContext.Provider value={{
+            addProductToWishlist,
+            wishlist,
+            numOfWishlistItems,
+            deleteProductFromWishlist,
+            clearWishlist,
+            getProductWishlist
+        }}>
+            {props.children}
+        </FetchWishlistContext.Provider>
+    );
 }

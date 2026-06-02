@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { BaseUrl } from "../Componentes/BaseUrl/base";
 import { mediaContext } from "./MediaStore";
@@ -35,25 +35,25 @@ export default function FetchCartProvider(props) {
         }
     };
 
-    const getProductCart = async () => {
-        try {
-            const { data } = await axios.get(`${BaseUrl}/carts/getCartForUser`, {
-                headers: { 'token': token }
-            });
-            setCart(data.cart);
-            calculateNumOfCart(data.cart.items); 
-            setNumOfCart(data.cart.items.length);
-        } catch (error) {
-            console.error("Error fetching cart:", error);
-        }
-    };
+const getProductCart = useCallback(async () => {
+    try {
+        const { data } = await axios.get(`${BaseUrl}/carts/getCartForUser`, {
+            headers: { token }
+        });
+
+        setCart(data.cart);
+        calculateNumOfCart(data.cart.items);
+        setNumOfCart(data.cart.items.length);
+    } catch (error) {
+        console.error("Error fetching cart:", error);
+    }
+}, [token]);
 
     const calculateNumOfCart = (items) => {
         const totalCount = items.reduce((acc, item) => acc + (item.quantity || 0), 0);
         setNumOfCart(totalCount);
     };
-    
-// eslint-disable-next-line react-hooks/exhaustive-deps
+
     useEffect(() => {
         if (localStorage.getItem("token") && userData !== '') {
             getProductCart()
